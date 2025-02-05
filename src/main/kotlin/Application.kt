@@ -1,5 +1,6 @@
 package com.thomasd
 
+import com.thomasd.routes.configureRouting
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
