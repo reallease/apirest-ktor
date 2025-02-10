@@ -1,18 +1,19 @@
 package com.thomasd.routes
 
-import com.thomasd.models.User
-import com.thomasd.repository.UserRepository
+import com.thomasd.service.JwtService
 import com.thomasd.service.UserService
-import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Application.configureRouting(
-    userService: UserService
+    userService: UserService,
+    jwtService: JwtService
 ) {
     routing {
+        route("/api/auth") {
+            authRoute(jwtService)
+        }
+
         route ("/api/user"){
             userRoute(userService)
         }

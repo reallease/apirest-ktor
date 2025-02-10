@@ -1,8 +1,10 @@
 package com.thomasd
 
+import com.thomasd.plugins.configureSecurity
 import com.thomasd.plugins.configureSerialization
 import com.thomasd.repository.UserRepository
 import com.thomasd.routes.configureRouting
+import com.thomasd.service.JwtService
 import com.thomasd.service.UserService
 import io.ktor.server.application.*
 
@@ -13,7 +15,9 @@ fun main(args: Array<String>) {
 fun Application.module() {
     val userRepository = UserRepository()
     val userService = UserService(userRepository)
+    val jwtService = JwtService(this, userService)
 
     configureSerialization()
-    configureRouting(userService)
+    configureSecurity(jwtService)
+    configureRouting(userService, jwtService)
 }

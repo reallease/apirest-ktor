@@ -1,7 +1,7 @@
 package com.thomasd.routes
 
+import com.thomasd.com.thomasd.routes.request.UserRequest
 import com.thomasd.models.User
-import com.thomasd.routes.request.UserRequest
 import com.thomasd.routes.response.UserResponse
 import com.thomasd.service.UserService
 import io.ktor.http.*
@@ -25,7 +25,7 @@ fun Route.userRoute(
             name = "id",
             value = createdUser.id.toString()
         )
-        call.respond(message = HttpStatusCode.Created)
+        call.respond(HttpStatusCode.Created, message = "User was created")
     }
 
     get {
@@ -50,6 +50,7 @@ fun Route.userRoute(
     }
 }
 
+
 private fun UserRequest.toModel(): User =
     User(
         id = UUID.randomUUID(),
@@ -61,5 +62,6 @@ private fun UserRequest.toModel(): User =
 private fun User.toResponse(): UserResponse =
     UserResponse(
         id = this.id,
-        email = this.email
+        email = this.email,
+        password = this.password
     )

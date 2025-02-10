@@ -1,6 +1,8 @@
-package com.thomasd.routes.request
+package com.thomasd.com.thomasd.routes.request
 
+import com.thomasd.models.User
 import kotlinx.serialization.Serializable
+import org.mindrot.jbcrypt.BCrypt
 
 @Serializable
 data class UserRequest(
