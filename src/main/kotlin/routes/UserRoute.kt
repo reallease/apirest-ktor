@@ -44,9 +44,6 @@ fun Route.userRoute(
             val foundUser = userService.findById(id)
             ?: return@get call.respond(HttpStatusCode.NotFound)
 
-        call.respond(
-            message = foundUser.toResponse()
-        )
     }
 }
 
@@ -62,6 +59,7 @@ private fun UserRequest.toModel(): User =
 private fun User.toResponse(): UserResponse =
     UserResponse(
         id = this.id,
+        username = this.username,
         email = this.email,
         password = this.password
     )
