@@ -1,9 +1,5 @@
 package com.thomasd.database
 
-import org.jetbrains.exposed.sql.Database
-
-private val dbPassword = System.getenv("PASSWORDSQL")
-
 object DatabaseFactory {
     init {
         Database.connect(
