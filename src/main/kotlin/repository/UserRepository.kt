@@ -1,6 +1,10 @@
 package com.thomasd.repository
 
 import com.thomasd.models.User
+import com.thomasd.models.Users
+import com.thomasd.routes.response.UserResponse
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 import java.util.UUID
 
@@ -10,6 +14,19 @@ class UserRepository {
     // val listUsers get() = _users.toList() // fazendo uma copia
 
     fun findAll(): List<User> = _users
+
+    fun getAllUsers(): List<UserResponse> {
+        return transaction {
+            Users.selectAll().map{ linha ->
+                UserResponse(
+                    id = linha[Users.id],
+                    username = linha[Users.username],
+                    email = linha[Users.email],
+                    password = linha[Users.password],
+                )
+            }
+        }
+    }
 
     fun findById(id: UUID): User? = // pode ser nulo
         _users.firstOrNull { it.id == id }

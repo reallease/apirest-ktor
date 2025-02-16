@@ -31,6 +31,8 @@ fun Route.userRoute(
     get {
         val users = userService.findAll()
 
+        val users2 = userService
+
         call.respond(
             message = users.map(User::toResponse)
         )
@@ -62,6 +64,7 @@ private fun UserRequest.toModel(): User =
 private fun User.toResponse(): UserResponse =
     UserResponse(
         id = this.id,
+        username = this.username,
         email = this.email,
         password = this.password
     )
