@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
@@ -30,4 +29,16 @@ dependencies {
     implementation("io.ktor:ktor-server-auth")
     implementation("io.ktor:ktor-server-auth-jwt")
     implementation("org.mindrot:jbcrypt:0.4")
+
+    // Driver do mysql
+    implementation("mysql:mysql-connector-java:9.2.0")
+
+    // Exposed orm para o kotlin
+    implementation("org.jetbrains.exposed:exposed-core:0.59.0")
+    implementation("org.jetbrains.exposed:exposed-dao:0.59.0")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.59.0")
+    implementation("org.jetbrains.exposed:exposed-java-time:0.59.0")
+
+    // HikariCP pool de conexoes
+    implementation("com.zaxxer:HikariCP:6.2.1")
 }
