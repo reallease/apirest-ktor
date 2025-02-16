@@ -14,7 +14,6 @@ class JwtService(
     private val userService: UserService
 ) {
 
-    // configurações do jwt
     private val secret = getConfigProperty("jwt.secret")
     private val issuer = getConfigProperty("jwt.issuer")
     private val audience = getConfigProperty("jwt.audience")
@@ -28,6 +27,10 @@ class JwtService(
             .withIssuer(issuer)
             .build()
 
+    private fun loginRequestPassword(password: String) {
+        return
+    }
+
     fun createJwtToken(loginRequest: LoginRequest): String? {
         val foundUser = userService.findByEmail(loginRequest.email)
 
@@ -38,7 +41,7 @@ class JwtService(
                 .withAudience(audience)
                 .withIssuer(issuer)
                 .withClaim("email", foundUser.email)
-                .withExpiresAt(Date(System.currentTimeMillis() + 604_800_800))
+                .withExpiresAt(Date(System.currentTimeMillis() + 3_600_000))
                 .sign(Algorithm.HMAC256(secret))
         } else null
     }
