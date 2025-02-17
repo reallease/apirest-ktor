@@ -1,8 +1,7 @@
-package com.thomasd.com.thomasd.routes.request
+package com.thomasd.routes.request
 
 import com.thomasd.models.User
 import kotlinx.serialization.Serializable
-import org.mindrot.jbcrypt.BCrypt
 
 @Serializable
 data class UserRequest(
@@ -10,4 +9,10 @@ data class UserRequest(
     val username: String,
     val email: String,
     val password: String
-)
+) {
+    fun toUser() = User(
+        username = username,
+        email = email,
+        password = password
+    )
+}

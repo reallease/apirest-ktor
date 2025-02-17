@@ -1,6 +1,6 @@
 package com.thomasd.routes
 
-import com.thomasd.com.thomasd.routes.request.UserRequest
+import com.thomasd.routes.request.UserRequest
 import com.thomasd.models.User
 import com.thomasd.repository.UserRepository
 import com.thomasd.routes.response.UserResponse
@@ -17,61 +17,67 @@ fun Route.userRoute(
     val repository = UserRepository()
     post {
         val userRequest = call.receive<UserRequest>()
+        val createdUser = repository.saveUserDB(userRequest.toModel())
 
+        if (createdUser != null) {
+            call.respond(HttpStatusCode.Created, message = "User was created")
+        } else {
+            call.respond(HttpStatusCode.BadRequest, "User not created")
+        }
 
-        val createdUser = userService.save(
-            user = userRequest.toModel()
-        ) ?: return@post call.respond(HttpStatusCode.BadRequest)
+//        val createdUser = userService.save(
+//            user = userRequest.toModel()
+//        ) ?: return@post call.respond(HttpStatusCode.BadRequest)
 
-        call.response.header( // para o header
-            name = "id",
-            value = createdUser.id.toString()
-        )
-        call.respond(HttpStatusCode.Created, message = "User was created")
+//        call.response.header( // para o header
+//            name = "id",
+//            value = createdUser.id.toString()
+//        )
+//        call.respond(HttpStatusCode.Created, message = "User was created")
     }
 
-    get {
-//        val users = userService.findAll()
+//    get {
+////        val users = userService.findAll()
+//
+//        val response = repository.users().map {
+//            it.toResponse()
+//        }
+//        call.respond(response)
+//
+////        val users2 = userService
+////
+////        call.respond(
+////            message = users.map(User::toResponse)
+////        )
+//
+//    }
 
-        val response = repository.users().map {
-            it.toResponse()
-        }
-        call.respond(response)
-
-//        val users2 = userService
+//    get("/{id}") {
+//        val id: String = call.parameters["id"]
+//            ?: return@get call.respond(HttpStatusCode.BadRequest)
+//
+//            val foundUser = userService.findById(id)
+//            ?: return@get call.respond(HttpStatusCode.NotFound)
 //
 //        call.respond(
-//            message = users.map(User::toResponse)
+//            message = foundUser.toResponse()
 //        )
-
-    }
-
-    get("/{id}") {
-        val id: String = call.parameters["id"]
-            ?: return@get call.respond(HttpStatusCode.BadRequest)
-
-            val foundUser = userService.findById(id)
-            ?: return@get call.respond(HttpStatusCode.NotFound)
-
-        call.respond(
-            message = foundUser.toResponse()
-        )
-    }
+//    }
 }
 
 
 private fun UserRequest.toModel(): User =
     User(
-        id = UUID.randomUUID(),
+        //id = UUID.randomUUID(),
         username = this.username,
         email = this.email,
         password = this.password
     )
 
-private fun User.toResponse(): UserResponse =
-    UserResponse(
-        id = this.id,
-        username = this.username,
-        email = this.email,
-        password = this.password
-    )
+//private fun User.toResponse(): UserResponse =
+//    UserResponse(
+//        id = this.id,
+//        username = this.username,
+//        email = this.email,
+//        password = this.password
+//    )
