@@ -13,7 +13,7 @@ data class User( // classe somente para o modelo
 
 object Users : Table("users") {
     val id = uuid("id").autoGenerate()
-    val username = varchar("username", 255)
+    val username = varchar("user_name", 255)
     val email = varchar("email", 255).uniqueIndex()
     val password = varchar("password", 255)
 

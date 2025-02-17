@@ -2,6 +2,7 @@ package com.thomasd.routes
 
 import com.thomasd.com.thomasd.routes.request.UserRequest
 import com.thomasd.models.User
+import com.thomasd.repository.UserRepository
 import com.thomasd.routes.response.UserResponse
 import com.thomasd.service.UserService
 import io.ktor.http.*
@@ -13,6 +14,7 @@ import java.util.*
 fun Route.userRoute(
     userService: UserService
 ) {
+    val repository = UserRepository()
     post {
         val userRequest = call.receive<UserRequest>()
 
@@ -29,13 +31,18 @@ fun Route.userRoute(
     }
 
     get {
-        val users = userService.findAll()
+//        val users = userService.findAll()
 
-        val users2 = userService
+        val response = repository.users().map {
+            it.toResponse()
+        }
+        call.respond(response)
 
-        call.respond(
-            message = users.map(User::toResponse)
-        )
+//        val users2 = userService
+//
+//        call.respond(
+//            message = users.map(User::toResponse)
+//        )
 
     }
 
