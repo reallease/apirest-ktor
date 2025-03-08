@@ -1,15 +1,13 @@
 package com.thomasd.routes
 
-import com.thomasd.routes.request.UserRequest
 import com.thomasd.models.User
 import com.thomasd.repository.UserRepository
-import com.thomasd.routes.response.UserResponse
+import com.thomasd.routes.request.UserRequest
 import com.thomasd.service.UserService
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import java.util.*
 
 fun Route.userRoute(
     userService: UserService
@@ -25,15 +23,10 @@ fun Route.userRoute(
             call.respond(HttpStatusCode.BadRequest, "User not created")
         }
 
-//        val createdUser = userService.save(
-//            user = userRequest.toModel()
-//        ) ?: return@post call.respond(HttpStatusCode.BadRequest)
-
 //        call.response.header( // para o header
 //            name = "id",
 //            value = createdUser.id.toString()
 //        )
-//        call.respond(HttpStatusCode.Created, message = "User was created")
     }
 
 //    get {
@@ -68,8 +61,7 @@ fun Route.userRoute(
 
 private fun UserRequest.toModel(): User =
     User(
-        //id = UUID.randomUUID(),
-        username = this.username,
+        name = this.name,
         email = this.email,
         password = this.password
     )

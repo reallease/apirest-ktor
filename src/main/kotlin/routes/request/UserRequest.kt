@@ -6,12 +6,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UserRequest(
     // criar isso para que o client da api nao gerasse o id
-    val username: String,
+    val name: String,
     val email: String,
     val password: String
 ) {
     fun toUser() = User(
-        username = username,
+        name = name,
         email = email,
         password = password
     )

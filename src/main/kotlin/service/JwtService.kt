@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.thomasd.com.thomasd.routes.request.LoginRequest
+import com.thomasd.repository.UserRepository
 import io.ktor.server.application.*
 import io.ktor.server.auth.jwt.*
 import org.mindrot.jbcrypt.BCrypt
@@ -31,31 +32,31 @@ class JwtService(
         return
     }
 
-    fun createJwtToken(loginRequest: LoginRequest): String? {
-        val foundUser = userService.findByEmail(loginRequest.email)
+//    fun createJwtToken(loginRequest: LoginRequest): String? {
+//        val foundUser = userService.findByEmail(loginRequest.email)
+//
+//        // se o usuario foi encontrado e a senha criptografada é igual a senha do usuario
+//        return if(foundUser != null && BCrypt.checkpw(loginRequest.password, foundUser.password)) {
+//            JWT
+//                .create()
+//                .withAudience(audience)
+//                .withIssuer(issuer)
+//                .withClaim("email", foundUser.email)
+//                .withExpiresAt(Date(System.currentTimeMillis() + 3_600_000))
+//                .sign(Algorithm.HMAC256(secret))
+//        } else null
+//    }
 
-        // se o usuario foi encontrado e a senha criptografada é igual a senha do usuario
-        return if(foundUser != null && BCrypt.checkpw(loginRequest.password, foundUser.password)) {
-            JWT
-                .create()
-                .withAudience(audience)
-                .withIssuer(issuer)
-                .withClaim("email", foundUser.email)
-                .withExpiresAt(Date(System.currentTimeMillis() + 3_600_000))
-                .sign(Algorithm.HMAC256(secret))
-        } else null
-    }
-
-    fun customValidator(credential: JWTCredential): JWTPrincipal? {
-        val email = extractEmail(credential)
-        val foundUser = email.let(userService::findByEmail)
-
-        return foundUser?.let {
-            if(audienceMatches(credential)) {
-                JWTPrincipal(credential.payload)
-            } else null
-        }
-    }
+//    fun customValidator(credential: JWTCredential): JWTPrincipal? {
+//        val email = extractEmail(credential)
+//        val foundUser = email.let(userService::findByEmail)
+//
+//        return foundUser?.let {
+//            if(audienceMatches(credential)) {
+//                JWTPrincipal(credential.payload)
+//            } else null
+//        }
+//    }
 
     private fun audienceMatches(credential: JWTCredential): Boolean =
         credential.payload.audience.contains(audience)

@@ -9,14 +9,13 @@ import java.util.*
 @Serializable
 data class UserResponse(
     //val id: String,
-    val username: String,
+    val name: String,
     val email: String,
     val password: String
 )
 
 fun User.toResponse() = UserResponse(
-    //id = id.toString(),
-    username = username,
+    name = name,
     email = email,
     password = password
 )

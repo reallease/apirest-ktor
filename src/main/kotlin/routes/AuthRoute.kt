@@ -10,13 +10,13 @@ import kotlin.math.log
 
 fun Route.authRoute(jwtService: JwtService) {
 
-    post {
-        val loginRequest = call.receive<LoginRequest>() // recebemos a solicitação de request
-
-        val token = jwtService.createJwtToken(loginRequest) // criamos o token, que retorna uma string ou nulo
-
-        token?.let {
-            call.respond(hashMapOf("token" to it))
-        } ?: call.respond(HttpStatusCode.Unauthorized)
-    }
+//    post {
+//        val loginRequest = call.receive<LoginRequest>() // recebemos a solicitação de request
+//
+//        val token = jwtService.createJwtToken(loginRequest) // criamos o token, que retorna uma string ou nulo
+//
+//        token?.let {
+//            call.respond(hashMapOf("token" to it))
+//        } ?: call.respond(HttpStatusCode.Unauthorized)
+//    }
 }

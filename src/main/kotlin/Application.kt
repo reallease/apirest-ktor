@@ -8,7 +8,6 @@ import com.thomasd.routes.configureRouting
 import com.thomasd.service.JwtService
 import com.thomasd.service.UserService
 import io.ktor.server.application.*
-import org.jetbrains.exposed.sql.Database
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
@@ -17,7 +16,7 @@ fun main(args: Array<String>) {
 fun Application.module() {
     DatabaseFactory.init()
     val userRepository = UserRepository()
-    val userService = UserService(userRepository)
+    val userService = UserService()
     val jwtService = JwtService(this, userService)
 
     configureSerialization()

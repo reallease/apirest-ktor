@@ -13,9 +13,9 @@ fun Application.configureSecurity(
             realm = jwtService.realm
             verifier(jwtService.jwtVerifier)
 
-            validate { credential->
-                jwtService.customValidator(credential)
-            }
+//            validate { credential->
+//                jwtService.customValidator(credential)
+//            }
         }
     }
 }

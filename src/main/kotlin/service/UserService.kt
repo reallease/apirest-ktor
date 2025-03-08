@@ -1,24 +1,16 @@
 package com.thomasd.service
 
-import com.thomasd.models.User
-import com.thomasd.models.Users
 import com.thomasd.repository.UserRepository
-import org.jetbrains.exposed.sql.insert
+import org.mindrot.jbcrypt.BCrypt
 import java.util.*
 
-class UserService(
-    private val userRepository: UserRepository
-) {
-    fun findAll(): List<User> =
-        userRepository.findAll()
+class UserService{
 
-//    fun findById(id: String): User? =
-//        userRepository.findById(
-//            id = UUID.fromString(id)
-//        )
+    // service para tratamentos de dados e verificação de dados
 
-    fun findByEmail(email: String): User? =
-        userRepository.findByEmail(email)
+    fun encryptPassword(password: String): String {
+        return BCrypt.hashpw(password, BCrypt.gensalt())
+    }
 
 
     // colocar o Users.insert aqui
