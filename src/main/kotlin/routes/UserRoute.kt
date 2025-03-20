@@ -1,5 +1,6 @@
 package com.thomasd.routes
 
+import com.thomasd.dao.UserDao
 import com.thomasd.models.User
 import com.thomasd.repository.UserRepository
 import com.thomasd.routes.request.UserRequest
@@ -10,7 +11,8 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.userRoute(
-    userService: UserService
+    userService: UserService,
+    userDao: UserDao
 ) {
     val repository = UserRepository()
     post {
@@ -29,33 +31,20 @@ fun Route.userRoute(
 //        )
     }
 
-//    get {
-////        val users = userService.findAll()
-//
-//        val response = repository.users().map {
-//            it.toResponse()
-//        }
-//        call.respond(response)
-//
-////        val users2 = userService
-////
-////        call.respond(
-////            message = users.map(User::toResponse)
-////        )
-//
-//    }
+    get("/{email}") {
+        val email = call.parameters["email"]
+        if (email != null) {
+            val usss = userDao.findEmailUser(email)
+            if (usss != null) {
+                call.respond(usss)
+            } else {
+                call.respond(HttpStatusCode.NotFound, "Usuario nao encontrado")
+            }
+        } else {
+            call.respond(HttpStatusCode.BadRequest, "Email invalido")
+        }
+    }
 
-//    get("/{id}") {
-//        val id: String = call.parameters["id"]
-//            ?: return@get call.respond(HttpStatusCode.BadRequest)
-//
-//            val foundUser = userService.findById(id)
-//            ?: return@get call.respond(HttpStatusCode.NotFound)
-//
-//        call.respond(
-//            message = foundUser.toResponse()
-//        )
-//    }
 }
 
 
@@ -65,11 +54,3 @@ private fun UserRequest.toModel(): User =
         email = this.email,
         password = this.password
     )
-
-//private fun User.toResponse(): UserResponse =
-//    UserResponse(
-//        id = this.id,
-//        username = this.username,
-//        email = this.email,
-//        password = this.password
-//    )

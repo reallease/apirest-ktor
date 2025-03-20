@@ -1,5 +1,6 @@
 package com.thomasd.routes
 
+import com.thomasd.dao.UserDao
 import com.thomasd.repository.UserRepository
 import com.thomasd.service.JwtService
 import com.thomasd.service.UserService
@@ -15,7 +16,7 @@ fun Application.configureRouting(
             authRoute(jwtService)
         }
         route ("/api/user"){
-            userRoute(userService)
+            userRoute(userService, userDao = UserDao())
         }
     }
 }
