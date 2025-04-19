@@ -59,6 +59,8 @@ class UserDao(
             .singleOrNull()// Retorna um único elemento ou null
     }
 
+
+
     suspend fun emailExist(email: String) = dbQuery {
         Users.select { Users.email eq email } // SELECT * FROM users WHERE(email = 'email@gmail.com');
             .limit(1) // limite de 1, porque precisamos so de 1 pra ver se existe
